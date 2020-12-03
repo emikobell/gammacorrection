@@ -1,0 +1,4 @@
+%Creating an array from 0 to 1 in 0.05 increments
+requestedSignal = [0:0.05:1]
+
+lightOutput = (requestedSignal
