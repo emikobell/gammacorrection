@@ -29,6 +29,9 @@ box(axes1,'on');
 hold(axes1,'off');
 
 %The "GraphicsSmoothing" checkbox is checked under the Plotting in Property
-%Inspector.
+%Inspector. The smooth function was also used, and the data remained the
+%same.
+
+
 
 
