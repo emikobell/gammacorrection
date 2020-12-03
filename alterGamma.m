@@ -1,4 +1,4 @@
-function [lightOutput] = alterGamma(img, gammaValue)
+function alterGamma(img, gammaValue)
 
 %Reading in the image
 img = imread(img);

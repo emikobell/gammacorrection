@@ -21,12 +21,14 @@ hold(axes1,'on');
 % Create plot
 plot(requestedSignal, lightOutput);
 
-% Ylabel
+% Create ylabel
 ylabel({'Light Output'});
 
-% 
+% Create xlabel
 xlabel({'Requested Signal'});
 
+box(axes1,'on');
+hold(axes1,'off');
 
 %The "GraphicsSmoothing" checkbox is checked under the Plotting in Property
 %Inspector. The smooth function was also used, and the data remained the
@@ -43,35 +45,11 @@ alterGamma("Bodleian_WTCollection.png", 2.0)
 
 %%
 
-%Q4 Reading in GammaData as a table, since it's more efficient as a table
-%(CITE)
+%Q4 Reading in GammaData as a table, since it's 
 
 gammaData = readtable('GammaData.csv');
 
 %Plot gamma curve
 
-%If I plot the table of the data as-is, the curve is not smooth. I installed the
-%Curve Fitting Toolbox to use the smooth function on the measuredOutput.
-%The requestedSignal variable does not need smoothing since the intervals
-%between values are consistent.
-
-smoothOutput = smooth(gammaData.measuredOutput)
-
-% Create figure
-figure2 = figure;
-
-% Create axes
-axes1 = axes('Parent',figure2);
-hold(axes1,'on');
-
-% Create plot
-plot(gammaData.requestedSignal,smoothOutput);
-
-% Ylabel
-ylabel({'Measured Output'});
-
-% Xlabel
-xlabel({'Requested Signal'});
-
-
+%I am smoothing 
 
