@@ -9,7 +9,15 @@ options = fitoptions('Method', 'NonlinearLeastSquares');
 options.StartPoint = targetExponent; % provide a starting value based on the expected power-law
 
 f = fit(xValues, yValues, 'x^m', options); 
-plot(f, 'b'); legend('hide');
+plot(f, 'g'); legend('hide');
+
+plot(X1,Y1,'Marker','x','LineStyle','none',...
+    'Color',[0.850980392156863 0.325490196078431 0.0980392156862745]);
+
+% Create plot
+plot(X2,Y2,'DisplayName','fitted curve',...
+    'Color',[0 0.447058823529412 0.741176470588235]);
+
 
 f % the fit parameters are stored in the fit object, returned by the fit function.
 
@@ -17,6 +25,6 @@ ylabel({'Light Output'});
 xlabel({'Requested Signal'});
 
 
-text(0.1, 0.9, ['Best-fitting exponent = ' num2str(f.m, '%3.2f')], 'fontsize', 14);
+text(0.1, 0.9, ['best-fitting exponent = ' num2str(f.m, '%3.2f')], 'fontsize', 14);
 text(0.1, 0.8, ['y = x ^{' num2str(f.m, '%3.2f') '}'], 'fontsize', 14);
 end
