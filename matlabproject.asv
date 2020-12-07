@@ -108,6 +108,7 @@ text(0.1, 0.8, ['y = x ^{' num2str(f.m, '%3.2f') '}'], 'fontsize', 12);
 end
 
 %%
+%Q6: Output png of test images
 
 function eightTest
 
@@ -119,3 +120,18 @@ binaryElement = zeros(600, 600);
     imwrite(binaryElement, strcat('Pattern', num2str(i), '.png'))
     end
 end
+%%
+% Q7: Have a look at the code in DummySetupInitialStimulus and DummyUpdateStimulus.
+% They both also use a custom-written function called DrawDisc. You should be able to call
+% these functions as follows:
+
+% [figWindowHandle, wPattern, hPattern] = DummySetupInitialStimulus(1, 0.2);
+% pause
+% DummyUpdateStimulus(figWindowHandle, wPattern, hPattern, 0.5)
+
+% Describe what happens and why?
+% The first line runs a function to draw a gray circle over a square 1/9
+% ratio white to black. 
+
+% What’s the benefit of having a DrawDisc function?
+
