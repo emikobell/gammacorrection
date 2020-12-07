@@ -5,7 +5,7 @@ function PowerLawExampleFit
 
 rng('shuffle') % seed the random number generator based on current time
 
-targetExponent = 5; % the exponent of the "ideal" power-law data, before adding noise
+targetExponent = 2; % the exponent of the "ideal" power-law data, before adding noise
 
 xValues = [0:0.1:1]'; 
 yValues = xValues .^ targetExponent + (0.01 .* randn(size(xValues))); % simulated noisy data

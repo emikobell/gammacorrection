@@ -1,0 +1,11 @@
+function Pattern1.png Pattern2.png Pattern3.png Pattern4.png Pattern5.png Pattern8.png = eightTest
+
+binaryElement = zeros(600, 600);
+
+    for i = 1:8
+    unit = GenerateThreeByThreeElement(i);
+    binaryElement = repmat(unit, 200, 200);
+    imwrite(binaryElement, strcat('Pattern', num2str(i), '.png'))
+    imshow(binaryElement,'InitialMagnification',100)
+    end
+end
