@@ -35,4 +35,5 @@ Screen(window, 'DrawTexture', textureIndex);
 
 Screen(window, 'Flip');
 KbWait;
+Screen('CloseAll');
 end
