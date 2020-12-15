@@ -135,5 +135,74 @@ end
 
 % What’s the benefit of having a DrawDisc function?
 %%
-%Q8:
+%Q8: Using the Psychtoolbox functionality, write two analogous functions to present the
+% experimental stimuli on a dedicated experiment screen (using the Screen function in
+% Psychtoolbox).
 
+function [windowPointer, wPattern, hPattern] = SetupInitialStimulus(numWhite, startingGreyLevel);
+if ~ismember(numWhite, 1:8)
+    error('Input argument numWhite is out of range - allowable values are integers 1-8')
+end
+if startingGreyLevel < 0.0 || startingGreyLevel > 1.0
+    error('Input argument startingGreyLevel is out of range - 0 to 1')
+end
+
+Screen('Preference', 'SkipSyncTests', 1);
+Screen('Preference', 'VisualDebugLevel', 0);
+whichScreen = 0;
+window = Screen(whichScreen, 'OpenWindow');
+
+black = BlackIndex(window); % pixel value for white
+
+Screen(window, 'FillRect', black); %Making the background white
+
+img = imread(['Pattern' int2str(numWhite) '.png']);
+
+[hPattern, wPattern] = size(img);
+
+set(0,'DefaultFigureVisible','off'); %turning off figure popups
+
+windowPointer = figure;
+imshow(img, 'InitialMagnification', 100, 'border', 'tight')
+DrawDisc(hPattern, wPattern, startingGreyLevel);
+diskImg = getframe(windowPointer);
+diskImg = frame2im(diskImg);
+
+
+set(0,'DefaultFigureVisible','on'); %turning the default back on
+
+textureIndex = Screen(window, 'MakeTexture', diskImg);
+Screen(window, 'DrawTexture', textureIndex);
+
+Screen(window, 'Flip');
+KbWait;
+end
+
+function UpdateStimulus(windowPointer, wPattern, hPattern, updatedGreyLevel)
+
+% Do some error checking on the input parameters
+if updatedGreyLevel < 0.0 || updatedGreyLevel > 1.0
+    error('Input argument updatedGreyLevel is out of range - 0 to 1')
+end
+Screen('Preference', 'SkipSyncTests', 1);
+Screen('Preference', 'VisualDebugLevel', 0);
+whichScreen = 0;
+window = Screen(whichScreen, 'OpenWindow');
+
+black = BlackIndex(window); % pixel value for white
+
+Screen(window, 'FillRect', black); %Making the background white
+
+set(0, 'CurrentFigure', windowPointer); %Setting as active figure without a figure popup in Matlab
+DrawDisc(wPattern, hPattern, updatedGreyLevel);
+diskImg = getframe(windowPointer);
+diskImg = frame2im(diskImg);
+
+textureIndex = Screen(window, 'MakeTexture', diskImg);
+Screen(window, 'DrawTexture', textureIndex);
+
+Screen(window, 'Flip');
+
+KbWait;
+Screen('CloseAll');
+end

@@ -1,0 +1,17 @@
+function character = GetKeyPress
+
+character = zeros(1, 1); %Making the character variable a scalar
+
+character = input('Please adjust the disc grey-level: ', 's');
+
+accepted = ['h' 'b' 'j' 'n' 'm'];
+
+    while isempty(character) | ~ismember(character, accepted) | length(character) > 1
+    character = input('Invalid input. Please enter the correct input. If you would like to exit, please enter "exit": ', 's');
+        if character == 'exit'
+        clear character %Explain rationale for this code 
+        break
+        end
+    end
+    
+end
