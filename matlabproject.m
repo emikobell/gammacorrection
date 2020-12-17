@@ -206,3 +206,52 @@ Screen(window, 'Flip');
 KbWait;
 Screen('CloseAll');
 end
+
+%%
+% Q9
+function character = GetKeyPress
+
+character = input('Please adjust the disc grey-level: ', 's');
+
+accepted = ['h' 'b' 'j' 'n' 'm'];
+
+    while isempty(character) | ~ismember(character, accepted) | length(character) > 1
+    character = input('Invalid input. Please enter the correct key: ', 's');
+    end
+    
+end
+%%
+% Q 10:
+function currentGreyLevel = RunTrial(numWhite, GreyLevel)
+
+[windowPointer, wPattern, hPattern] = SetupInitialStimulus(numWhite, GreyLevel);
+character = GetKeyPress;
+    
+    while ismember(character, 'hbjn')
+    
+    small = .0039; %This represents 1/256 of the grey level between 0 to 1; it cannot go inbetween grey levels
+    large = .0097; %This is  25/256 of the grey levels (about .1 when 0 to 1)
+    
+        if character == 'h'
+        GreyLevel = GreyLevel + large;
+        
+        elseif character == 'b'
+        GreyLevel = GreyLevel - large;
+    
+        elseif character == 'j'
+        GreyLevel = GreyLevel + small;
+    
+        elseif character == 'n'
+        GreyLevel = GreyLevel - small;
+        end
+    
+    pause(0.1)
+    UpdateStimulus(windowPointer, wPattern, hPattern, GreyLevel); %This function will test for limits also
+    character = GetKeyPress;
+    end
+    
+    if character == 'm'
+    currentGreyLevel = GreyLevel;
+    disp("It's a match!")
+    end
+end

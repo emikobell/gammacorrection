@@ -1,41 +1,52 @@
-function currentGreyLevel = RunTrial
+function brightnessMatch = RunTrial(numWhite)
 
-rng
+rng(1) %Setting the seed for the random number generator
+GreyLevel = randi([0 256])
+GreyLevel = GreyLevel * 
 
-[numWhite startingGreyLevel] = 
-
-[windowPointer, wPattern, hPattern] = SetupInitialStimulus(numWhite, startingGreyLevel);
+[window, windowPointer, wPattern, hPattern] = SetupInitialStimulus(numWhite, GreyLevel);
 character = GetKeyPress;
-    
-    if character == 'm'
-    currentGreyLevel = startingGreyLevel; %Accounting for match on the first try
-    disp("It's a match!")
-    end
     
     while ismember(character, 'hbjn')
     
-    small = .0039
-    large = .1
+    small = .0039; % Represents 1/256 of the grey level between 0 to 1; cannot go in between grey-levels
+    large = .097; % Represents  25/256 of the grey levels (about .1 when 0 to 1)
     
         if character == 'h'
-        updatedGreyLevel = startingGreyLevel + large
+        GreyLevel = GreyLevel + large;
         
         elseif character == 'b'
-        updatedGreyLevel = startingGreyLevel - large
+        GreyLevel = GreyLevel - large;
     
         elseif character == 'j'
-        updatedGreyLevel = startingGreyLevel + small
+        GreyLevel = GreyLevel + small;
     
         elseif character == 'n'
-        updatedGreyLevel = startingGreyLevel - small
+        GreyLevel = GreyLevel - small;
         end
-        
-    UpdateStimulus(windowPointer, wPattern, hPattern, updatedGreyLevel);
+    
+    pause(0.1)
+    UpdateStimulus(window, windowPointer, wPattern, hPattern, GreyLevel); %This function will test for limits also
     character = GetKeyPress;
     end
     
-    if character == 'm' && currentGreyLevel ~= startingGreyLevel
-    currentGreyLevel = updatedGreyLevel;
-    disp("It's a match!")
+    if character == 'm'
+    brightnessMatch = GreyLevel;
+    disp('It''s a match!')
+    
+    white = WhiteIndex(window);
+    Screen(window, 'TextStyle', [1]); %Bolding the text
+    Screen(window, 'TextStyle', [8]); %Outlining the text
+    DrawFormattedText(window, 'It''s a match!', 'center', 'center', white);
+    Screen(window, 'Flip', [], [1])
     end
+    
+    if character == 'q'
+    sca
+    error('Trial terminated.')
+    end
+
+KbWait;
+Screen('CloseAll');
+sca
 end
