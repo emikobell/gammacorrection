@@ -1,4 +1,4 @@
-function UpdateStimulus(window, windowPointer, wPattern, hPattern, GreyLevel)
+function UpdateStimulus(windowPointer, wPattern, hPattern, GreyLevel)
 
     if GreyLevel < 0 || GreyLevel > 1 %Checking if GreyLevel is out of bounds
        sca %Closing psychtoolbox screen and returning to Matlab command window
@@ -14,12 +14,6 @@ function UpdateStimulus(window, windowPointer, wPattern, hPattern, GreyLevel)
                    GreyLevel = 0.0039; %Restarts at 1/256 grey-level
             end
             
-        Screen('Preference', 'SkipSyncTests', 1); %Skipping sync tests (1 = true)
-        Screen('Preference', 'VisualDebugLevel', 0); %Skipping visual debut (0 = false)
-        whichScreen = 0; %Choosing the main monitor as the psychtoolbox screen
-        window = Screen(whichScreen, 'OpenWindow', [0 0 0]); %Opening the psychtoolbox window black
-        HideCursor(window) %Hiding cursor in the psychtoolbox window
-            
         elseif tryAgain == 'n'
                error('Trial terminated.') % Stops the trial completely by bringing up the error message
         else % Accounts for any other input
@@ -27,6 +21,9 @@ function UpdateStimulus(window, windowPointer, wPattern, hPattern, GreyLevel)
         end
     end
 
+window = Screen('Windows');
+window = window(1);
+    
 set(0, 'CurrentFigure', windowPointer); %Setting as active figure without a figure popup in Matlab
 DrawDisc(wPattern, hPattern, GreyLevel);
 diskImg = getframe(windowPointer);

@@ -1,9 +1,16 @@
-function brightnessMatch = RunTrial(numWhite)
+function [brightnessMatch] = RunTrial(numWhite)
 
 GreyLevel = randi([0 256]); % Radomly generate a grey-level
 GreyLevel = GreyLevel / 256; % Convert grey-level to 0 to 1 scale
 
-[window, windowPointer, wPattern, hPattern] = SetupInitialStimulus(numWhite, GreyLevel);
+[windowPointer, wPattern, hPattern] = SetupInitialStimulus(numWhite, GreyLevel);
+window = Screen('Windows');
+window = window(1);
+white = WhiteIndex(window);
+Screen(window, 'TextFont', 'Avenir');
+Screen(window, 'TextSize', 25);
+DrawFormattedText(window, 'Please adjust the disc grey-level. \n H: Significantly lighter \n B: Significantly darker \n J: Slightly lighter \n N: Slightly darker \n M: The disk matches the background \n \n Q: Quit', 'center', 100, white, [], [], [], [2]);
+Screen(window, 'Flip', [], [1]);
 character = GetKeyPress;
     
     while ismember(character, 'hbjn')
@@ -25,7 +32,7 @@ character = GetKeyPress;
         end
     
         pause(0.1)
-        UpdateStimulus(window, windowPointer, wPattern, hPattern, GreyLevel); %This function will test for limits also
+        UpdateStimulus(windowPointer, wPattern, hPattern, GreyLevel); %This function will test for limits also
         character = GetKeyPress;
     end
     
@@ -44,7 +51,5 @@ character = GetKeyPress;
        error('Trial terminated.')
     end
 
-pause(0.1);
-Screen('CloseAll');
-sca
+pause(0.5);
 end
