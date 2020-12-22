@@ -51,5 +51,5 @@ character = GetKeyPress;
        error('Trial terminated.')
     end
 
-pause(0.5);
+pause(0.5); 
 end

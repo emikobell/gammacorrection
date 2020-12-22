@@ -5,12 +5,12 @@ function [windowPointer, wPattern, hPattern] = SetupInitialStimulus(numWhite, Gr
     end
     
     if GreyLevel < 0.0 || GreyLevel > 1.0
-        error('GreyLevel is out of range. Input values must be between 0 to 1.')
+       error('GreyLevel is out of range. Input values must be between 0 to 1.')
     end
 
 window = Screen('Windows'); %Returns the current open windows in psychtoolbox
     
-    if isempty(window) %If no psychtoolbox windows are open, open screen
+    if isempty(window) %If no psychtoolbox windows are open, open one
        Screen('Preference', 'SkipSyncTests', 2);
        Screen('Preference', 'VisualDebugLevel', 0);
        whichScreen = 0;
@@ -37,4 +37,4 @@ set(0,'DefaultFigureVisible','on'); %turning the default back on
 textureIndex = Screen(window, 'MakeTexture', diskImg);
 Screen(window, 'DrawTexture', textureIndex);
 Screen(window, 'Flip', [], [1]);
-end
+return

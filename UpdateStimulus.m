@@ -33,4 +33,4 @@ textureIndex = Screen(window, 'MakeTexture', diskImg);
 Screen(window, 'DrawTexture', textureIndex);
 
 Screen(window, 'Flip', [], [1]); %Brings the drawn texture to the psychtoolbox screen
-end
+return
