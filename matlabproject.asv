@@ -138,10 +138,9 @@ end
 %Q8: Using the Psychtoolbox functionality, write two analogous functions to present the
 % experimental stimuli on a dedicated experiment screen (using the Screen function in
 % Psychtoolbox).
-
-[windowPointer, wPattern, hPattern] = SetupInitialStimulus(1, 0.2);
+SetupInitialStimulus
 KbWait;
-UpdateStimulus(windowPointer, wPattern, hPattern, 0.5)
+UpdateStimulus;
 KbWait;
 CloseandTidy
 

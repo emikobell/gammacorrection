@@ -1,3 +1,4 @@
+
 function PowerLawFit(xValues, yValues)
 
 targetExponent = 2;
@@ -21,10 +22,10 @@ plot(f, 'b'); legend('hide');
 f % the fit parameters are stored in the fit object, returned by the fit function.
 
 %Adding labels to the figure
-ylabel({'Light Output'});
-xlabel({'Requested Signal'});
+ylabel({'Requested Signal'});
+xlabel({'Measured Light Output'});
 
 %Set the font size to 12, (explain code in detail)
-text(0.1, 0.9, ['Best-fitting exponent = ' num2str(f.m, '%3.2f')], 'fontsize', 12);
-text(0.1, 0.8, ['y = x ^{' num2str(f.m, '%3.2f') '}'], 'fontsize', 12);
+text(0.5, 0.9, ['Best-fitting exponent = ' num2str(f.m, '%3.2f')], 'fontsize', 12);
+text(0.5, 0.8, ['y = x ^{' num2str(f.m, '%3.2f') '}'], 'fontsize', 12);
 end
