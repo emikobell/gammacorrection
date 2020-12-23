@@ -1,0 +1,34 @@
+function gammaAnalysis
+listOfIdentifiers = nchoosek('ABCDEF', 3);
+numParticipants = length(listOfIdentifiers);
+averageHalftones = zeros(8, numParticipants);
+totalAverage = zeros(8, 1);
+sdHalftones = zeros(8, 1);
+
+    for k = 1:8
+        
+        for i = 1:numParticipants
+            gammaData = readmatrix(['PerceptualGamma_' listOfIdentifiers(i, :) '.csv']);
+            greytoneData = gammaData(k, [2:4]);
+            averageHalftones(k, i) = mean(greytoneData);
+            participantLabel{i} = ['Participant ' int2str(i)];
+        end
+        
+        totalAverage(k) = mean(averageHalftones(k,))
+        sdHalftones(k) = std(averageHalftones(k, :));
+        labelNames{k} = ['Halftone ' int2str(k)];
+    end
+
+gammaAnalysisTable = cat(2, averageHalftones, sdHalftones);
+    
+gammaAnalysisTable = array2table(gammaAnalysisTable, 'VariableNames', cat(2, participantLabel, {'Standard Deviation'}), 'RowNames', labelNames)
+
+writetable(gammaAnalysisTable, 'PerceptualGammaData.csv');
+
+x = 1:8;
+bar(x, averageHalftones);
+hold on
+er = errorbar(x, averageHalftones, [sdHalftones .* -1], sdHalftones);    
+er.Color = [0 0 0];  
+hold off
+end

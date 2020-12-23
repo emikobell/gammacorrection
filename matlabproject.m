@@ -331,3 +331,12 @@ t = gcf; %Choosing current figure window from tiledlayout
 t.WindowState = 'maximized'; %Make figure window full screen
 end
 
+%%
+% Q15:
+gammaAnalysis
+
+%%
+% Q16:
+
+
+
