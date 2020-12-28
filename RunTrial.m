@@ -14,7 +14,7 @@ textTop = height *.06;
 textBottom = height - (height * .06);
 white = WhiteIndex(window);
 Screen(window, 'TextFont', 'Avenir');
-Screen(window, 'TextSize', 25); %Font is 10% the size of the screen width
+Screen(window, 'TextSize', fontSize); %Font is 10% the size of the screen width
 DrawFormattedText(window, 'Please adjust the disc grey-level. \n H: Significantly lighter \n B: Significantly darker \n J: Slightly lighter \n N: Slightly darker \n M: The disk matches the background \n \n Q: Quit', 'center', textTop, white, [], [], [], [2]);
 Screen(window, 'Flip', [], [1]);
 character = GetKeyPress;

@@ -8,13 +8,14 @@ window = Screen('Windows');
 window = window(1);
 [width, height] = Screen(window, 'WindowSize');
 
-fontsize = 0.1*width
-textTop =
-textBottom =
+fontSize = 0.01 * width;
+fontSize = round(fontSize); %Since Psychtoolbox does not accept decimal points for font size, round the number to the nearest integer
+textTop = height *.06;
+textBottom = height - (height * .06);
 white = WhiteIndex(window);
 Screen(window, 'TextFont', 'Avenir');
-Screen(window, 'TextSize', ); %Font is 10% the size of the screen width
-DrawFormattedText(window, 'Please adjust the disc grey-level. \n H: Significantly lighter \n B: Significantly darker \n J: Slightly lighter \n N: Slightly darker \n M: The disk matches the background \n \n Q: Quit', 'center', 0.06*height, white, [], [], [], [2]);
+Screen(window, 'TextSize', fontSize); %Font is 10% the size of the screen width
+DrawFormattedText(window, 'Please adjust the disc grey-level. \n H: Significantly lighter \n B: Significantly darker \n J: Slightly lighter \n N: Slightly darker \n M: The disk matches the background \n \n Q: Quit', 'center', textTop, white, [], [], [], [2]);
 Screen(window, 'Flip', [], [1]);
 character = GetKeyPress;
     
@@ -47,7 +48,7 @@ character = GetKeyPress;
     
        white = WhiteIndex(window);
        Screen(window, 'TextStyle', [1]); %Bolding the text
-       DrawFormattedText(window, 'It''s a match!', 'center', height - (height * 0.6), white);
+       DrawFormattedText(window, 'It''s a match!', 'center', textBottom, white);
        Screen(window, 'Flip', [], [1]);
     end
     
