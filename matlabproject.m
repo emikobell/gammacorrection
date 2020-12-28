@@ -34,6 +34,8 @@ xlabel({'Requested Signal'});
 
 %%
 
+%Q3
+
 %I created a function, alterGamma to output images under different gamma
 %values
 
@@ -194,6 +196,8 @@ character = GetKeyPress;
     disp("It's a match!")
     end
 end
+
+CloseandTidy
 
 %%
 %Q11:

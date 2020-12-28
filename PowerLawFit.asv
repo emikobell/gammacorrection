@@ -17,7 +17,7 @@ options = fitoptions('Method', 'NonlinearLeastSquares');
 options.StartPoint = targetExponent;
 
 f = fit(xValues, yValues, 'x^m', options); 
-plot(f, 'b'); legend('hide');
+H = plot(f, 'b'); legend('hide');
 
 
 f % the fit parameters are stored in the fit object, returned by the fit function.
