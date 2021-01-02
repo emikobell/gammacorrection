@@ -1,32 +1,23 @@
-
 function PowerLawFit(xValues, yValues)
 
-targetExponent = 2;
+targetExponent = 2; % Set the "starting point" Gamma as 2
 
-%Exponential function is convex and will only provide one answer as the
-%best fit, which means that the dataset inputted will have one answer.
-%Since most screens will have a gamma of around 2, I will set the starting
-%point to 2 to make the algorithm more efficient. However, a starting point
-%is not necessary.
+figure; hold on; % Open figure and allow subsequent plot arguments to layer
+plot(xValues, yValues, 'kx'); % Plotting the data points using black x markers
 
+options = fitoptions('Method', 'NonlinearLeastSquares'); % Set fit method as nonlinear least squares
+options.StartPoint = targetExponent; % Set the starting point gamma for the model
 
-figure; hold on;
-plot(xValues, yValues, 'rx');
-
-options = fitoptions('Method', 'NonlinearLeastSquares');
-options.StartPoint = targetExponent;
-
-f = fit(xValues, yValues, 'x^m', options); 
-plot(f, 'b'); legend('hide');
+f = fit(xValues, yValues, 'x^m', options); % Run the fit function using exponential model while calling the nonlinear least squares model as an option
+plot(f, 'b'); legend('hide'); % Plot the model curve with a blue line
 
 
-f % the fit parameters are stored in the fit object, returned by the fit function.
+f % Fit parameters are stored in the fit object, returned by the fit function.
 
-%Adding labels to the figure
-ylabel({'Requested Signal'});
+% Add labels to the figure
 xlabel({'Measured Light Output'});
+ylabel({'Requested Signal'});
 
-%Set the font size to 12, (explain code in detail)
-text(0.5, 0.9, ['Best-fitting exponent = ' num2str(f.m, '%3.2f')], 'fontsize', 12);
-text(0.5, 0.8, ['y = x ^{' num2str(f.m, '%3.2f') '}'], 'fontsize', 12);
+text(0.5, 0.9, ['Best-fitting exponent = ' num2str(f.m, '%3.2f')], 'fontsize', 12); % Set font size to 12, start the text in the centre of the figure, and 10% lower from the top. Print the "m" of the fit object with 2 decimal points, with 3 digits total.
+text(0.5, 0.8, ['y = x ^{' num2str(f.m, '%3.2f') '}'], 'fontsize', 12); % Set font size to 12, start the text in the centre of the figure, and 20% lower from the top. Print the "m" of the fit object with 2 decimal points, with 3 digits total.
 end

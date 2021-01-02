@@ -2,10 +2,8 @@
 
 requestedSignal = [0:0.05:1];
 
-% Using power-law formula to calculate light outputs for each number in the
+lightOutput = requestedSignal .^ 2.2; % Use power-law formula to calculate light outputs for each number in the
 % array
-
-lightOutput = requestedSignal .^ 2.2;
 
 %%
 

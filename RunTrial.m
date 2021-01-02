@@ -1,61 +1,66 @@
 function [brightnessMatch] = RunTrial(numWhite)
 
-GreyLevel = randi([0 256]); % Radomly generate a grey-level
+% Runs one grey-matching trial and returns the matched grey-level by calling SetupInitialStimulus, UpdateStimulus, and GetKeyPress.
+% When not using this function in a loop, please use the CloseandTidy function immediately after.
+% 2/1/2021 Emiko Bell
+
+
+GreyLevel = randi([1 255]); % Radomly generate a grey-level as a random integer between 1 and 255, removing options for white or black
 GreyLevel = GreyLevel / 256; % Convert grey-level to 0 to 1 scale
 
-[windowPointer, wPattern, hPattern] = SetupInitialStimulus(numWhite, GreyLevel);
-window = Screen('Windows');
-window = window(1);
-[width, height] = Screen(window, 'WindowSize');
+[windowPointer, wPattern, hPattern] = SetupInitialStimulus(numWhite, GreyLevel); % Call SetupInitialStimulus and outputting the figure and patterns
+window = Screen('Windows'); % Return current open windows in PTB
+window = window(1); % In case there are multiple windows open, choose the main (first) one. If there is only one, this line will choose that. 
+[width, height] = Screen(window, 'WindowSize'); % Output the width and height of the window (resolution in pixels)
 
-fontSize = 0.01 * width;
-fontSize = round(fontSize); %Since Psychtoolbox does not accept decimal points for font size, round the number to the nearest integer
-textTop = height *.06;
-textBottom = height - (height * .06);
-white = WhiteIndex(window);
-Screen(window, 'TextFont', 'Avenir');
-Screen(window, 'TextSize', fontSize); %Font is 10% the size of the screen width
-DrawFormattedText(window, 'Please adjust the disc grey-level. \n H: Significantly lighter \n B: Significantly darker \n J: Slightly lighter \n N: Slightly darker \n M: The disk matches the background \n \n Q: Quit', 'center', textTop, white, [], [], [], [2]);
-Screen(window, 'Flip', [], [1]);
-character = GetKeyPress;
+fontSize = 0.01 * width; % Define font size as 1% of the width
+fontSize = round(fontSize); % Since PTB does not accept decimal points for font size, round the number to the nearest integer
+textTop = height *.06; % Define top text placement as at the top 6% of the height
+textBottom = height - (height * .1); % Define bottom text placement at the bottom 10% of height
+white = WhiteIndex(window); % Define white for the text colour
+Screen(window, 'TextFont', 'Avenir'); % Specify font
+Screen(window, 'TextSize', fontSize); % Specify font size as defined above
+DrawFormattedText(window, 'Please adjust the disc grey-level. \n H: Significantly lighter \n B: Significantly darker \n J: Slightly lighter \n N: Slightly darker \n M: The disk matches the background \n \n Q: Quit', 'center', textTop, white, [], [], [], [2]); % Draw instructions in the center top of the window with more space between lines
+Screen(window, 'Flip', [], [1]); % Flip the drawn text to the window
+character = GetKeyPress; % Receive initial keypress in respose to the initial stimulus
     
-    while ismember(character, 'hbjn')
+    while ismember(character, 'hbjn') % Grey-level adjustment keys
     
     small = .0039; % Represents 1/256 of the grey level between 0 to 1; cannot go in between grey-levels
     large = .097; % Represents  25/256 of the grey levels (about .1 when 0 to 1)
     
-        if character == 'h'
+        if character == 'h' % Large grey adjustment by addition
            GreyLevel = GreyLevel + large;
         
-        elseif character == 'b'
+        elseif character == 'b' % Large grey adjustment by subtraction
                GreyLevel = GreyLevel - large;
     
-        elseif character == 'j'
+        elseif character == 'j' % Small grey adjustment by addition
                GreyLevel = GreyLevel + small;
     
-        elseif character == 'n'
+        elseif character == 'n' % Small grey adjustment by subtraction
                GreyLevel = GreyLevel - small;
         end
     
-        pause(0.1)
-        UpdateStimulus(windowPointer, wPattern, hPattern, GreyLevel); %This function will test for limits also
-        character = GetKeyPress;
+        pause(0.1) % Pause before the updated stimulus appears
+        UpdateStimulus(windowPointer, wPattern, hPattern, GreyLevel); % Call UpdateStimulus to show the updated disc as specified in the loop above.
+        character = GetKeyPress; % Character is redefined by the new key press in response to UpdateStimulus
     end
     
-    if character == 'm'
+    if character == 'm' % Grey-level matched
        brightnessMatch = GreyLevel;
        disp('It''s a match!')
     
-       white = WhiteIndex(window);
-       Screen(window, 'TextStyle', [1]); %Bolding the text
-       DrawFormattedText(window, 'It''s a match!', 'center', textBottom, white);
-       Screen(window, 'Flip', [], [1]);
+       white = WhiteIndex(window); % Define white
+       Screen(window, 'TextStyle', [1]); % Bold the text
+       DrawFormattedText(window, 'It''s a match!', 'center', textBottom, white); % Draw the match message
+       Screen(window, 'Flip', [], [1]); % Flip the text to the window without resetting the screen
     end
     
-    if character == 'q'
+    if character == 'q' % Terminate the trial
        sca
        error('Trial terminated.')
     end
 
-pause(0.5); 
+pause(0.5); %Pause before next trial, if this function is placed in a loop. Otherwise, please use the CloseandTidy function.
 end
