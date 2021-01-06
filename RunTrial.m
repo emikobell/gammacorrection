@@ -13,15 +13,7 @@ window = Screen('Windows'); % Return current open windows in PTB
 window = window(1); % In case there are multiple windows open, choose the main (first) one. If there is only one, this line will choose that. 
 [width, height] = Screen(window, 'WindowSize'); % Output the width and height of the window (resolution in pixels)
 
-fontSize = 0.01 * width; % Define font size as 1% of the width
-fontSize = round(fontSize); % Since PTB does not accept decimal points for font size, round the number to the nearest integer
-textTop = height *.06; % Define top text placement as at the top 6% of the height
-textBottom = height - (height * .1); % Define bottom text placement at the bottom 10% of height
-white = WhiteIndex(window); % Define white for the text colour
-Screen(window, 'TextFont', 'Avenir'); % Specify font
-Screen(window, 'TextSize', fontSize); % Specify font size as defined above
-DrawFormattedText(window, 'Please adjust the disc grey-level. \n H: Significantly lighter \n B: Significantly darker \n J: Slightly lighter \n N: Slightly darker \n M: The disk matches the background \n \n Q: Quit', 'center', textTop, white, [], [], [], [2]); % Draw instructions in the center top of the window with more space between lines
-Screen(window, 'Flip', [], [1]); % Flip the drawn text to the window
+drawInstructions(width, height, window)
 character = GetKeyPress; % Receive initial keypress in respose to the initial stimulus
     
     while ismember(character, 'hbjn') % Grey-level adjustment keys
@@ -44,16 +36,15 @@ character = GetKeyPress; % Receive initial keypress in respose to the initial st
     
         pause(0.1) % Pause before the updated stimulus appears
         UpdateStimulus(windowPointer, wPattern, hPattern, GreyLevel); % Call UpdateStimulus to show the updated disc as specified in the loop above.
+        drawInstructions(width, height, window)
         character = GetKeyPress; % Character is redefined by the new key press in response to UpdateStimulus
     end
     
     if character == 'm' % Grey-level matched
        brightnessMatch = GreyLevel;
-       disp('It''s a match!')
-    
-       white = WhiteIndex(window); % Define white
+       textBottom = height - (height * .1); % Define bottom text placement at the bottom 10% of height
        Screen(window, 'TextStyle', [1]); % Bold the text
-       DrawFormattedText(window, 'It''s a match!', 'center', textBottom, white); % Draw the match message
+       DrawFormattedText(window, 'It''s a match!', 'center', textBottom, [255 255 255]); % Draw the match message
        Screen(window, 'Flip', [], [1]); % Flip the text to the window without resetting the screen
     end
     

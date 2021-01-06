@@ -11,14 +11,7 @@ PerceptualGamma(:, 1) = 1:8; % Fill the first column of the table with the patte
 rng(participantID); % Initialise random number generator with the participantID as the seed
 patternNumber = randperm(8); % Creating a random permutation of integers from 1 to 8
 
-Screen('Preference', 'SkipSyncTests', 2); % Skip sync tests for PTB
-Screen('Preference', 'VisualDebugLevel', 0); % Remove the visual debug screen on initialisation of PTB
-whichScreen = 0; % Choose main window as the stimulus screen
-PsychImaging('OpenWindow', whichScreen); % To configure the resolution for Retina screens, this script is needed to call the initial window before alterations
-PsychImaging('PrepareConfiguration'); % Call configurations
-PsychImaging('AddTask', 'General', 'UseRetinaResolution'); % Add Retina screen compatibility to configurations; if not placed, PTB will default to a basic resolution of 1440 x 900 and the stimulus will not be displayed correctly on Macs with Retina displays. This line will be ignored if the screen is not a Retina screen.
-window = Screen(whichScreen, 'OpenWindow', [0 0 0]); % Open the stimulus window with a black background
-HideCursor(window) % Hide the cursor on the stimulus display
+window = OpenPTBWindow; %Open a black PTB window and output the window pointer for future scripts
 
     for j = 1:3 % Repeat three times for each pattern
         for l = 1:8 % Run for each pattern
@@ -28,7 +21,6 @@ HideCursor(window) % Hide the cursor on the stimulus display
         end
     end
 
-white = WhiteIndex(window); % Define white
 DrawFormattedText(window, 'Thank you, this is the end of the experiment. \n The Gamma Data CSV has been saved to your working directory.', 'center', 200, white, [], [], [], [2]); % Draw completion text 200 pixels down from the top of the screen
 Screen(window, 'Flip'); % Show drawn text on the screen
 KbWait; % Wait for input

@@ -7,7 +7,7 @@ function UpdateStimulus(windowPointer, wPattern, hPattern, GreyLevel)
 
 
     if GreyLevel < 0 || GreyLevel > 1 % Check if GreyLevel is out of bounds
-       sca % Close PTB screen and return to Matlab command window
+       sca % Close PTB window
        warning('GreyLevel is out of range. Accepted values are between 0 to 1.') % Warning appears to enable continuation of script but informs user of issues.
        tryAgain = input('Would you like to continue from the last step? y/n: ', 's'); % Take y or n and go to the if statement
     
@@ -26,18 +26,21 @@ function UpdateStimulus(windowPointer, wPattern, hPattern, GreyLevel)
         else % Account for any other input
             input('Please input y or n: ', 's')
         end
+        
+        OpenPTBWindow;
+        
     end
-
+        
 window = Screen('Windows'); % Return current open windows in PTB
 window = window(1); % In case there are multiple windows open, choose the main (first) one. If there is only one, this line will choose that. 
     
 set(0, 'CurrentFigure', windowPointer); % Set as active figure without a figure popup in Matlab
-DrawDisc(wPattern, hPattern, GreyLevel); % Call DrawDisc for a newly drawn grey-disc with the specified grey-level
+AltDrawDisc(wPattern, hPattern, GreyLevel); % Call DrawDisc for a newly drawn grey-disc with the specified grey-level
 diskImg = getframe(windowPointer); % Capture the figure window as a frame
 diskImg = frame2im(diskImg); % Convert the figure window frame to image
 
 textureIndex = Screen(window, 'MakeTexture', diskImg); % Make the pattern with the disc a texture
 Screen(window, 'DrawTexture', textureIndex); % Draw the texture
 
-Screen(window, 'Flip', [], [1]); % Flip the drawn texture to the window without resetting past drawings
-end
+Screen(window, 'Flip', [], [1]); % Flip the drawn texture to the window
+return
