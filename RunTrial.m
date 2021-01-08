@@ -1,4 +1,4 @@
-function [brightnessMatch] = RunTrial(numWhite)
+function brightnessMatch = RunTrial(numWhite)
 
 % Runs one grey-matching trial and returns the matched grey-level by calling SetupInitialStimulus, UpdateStimulus, and GetKeyPress.
 % When not using this function in a loop, please use the CloseandTidy function immediately after.

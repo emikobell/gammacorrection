@@ -1,5 +1,9 @@
 function drawInstructions(width, height, window)
 
+% Generates instruction text for the grey-matching experiment and draws them over preexisting Psychtoolbox windows.(e.g. for use
+% in RunTrial).
+% 6/1/2021 Emiko Bell
+
 fontSize = 0.01 * width; % Define font size as 1% of the width
 fontSize = round(fontSize); % Since PTB does not accept decimal points for font size, round the number to the nearest integer
 textTop = height *.06; % Define top text placement as at the top 6% of the height

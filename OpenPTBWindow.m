@@ -1,5 +1,9 @@
 function window = OpenPTBWindow
 
+% Opens a Psychtoolbox window with no sync tests and visual debugging, and shows a black screen with no cursor on the window. Also
+% optimsed for Retina displays. The window pointer is outputted.
+% 6/1/2021 Emiko Bell
+
 Screen('Preference', 'SkipSyncTests', 2); % Skip sync tests for PTB
 Screen('Preference', 'VisualDebugLevel', 0); % Remove the visual debug screen on initialisation of PTB
 whichScreen = 0; % Choose main window as the stimulus screen
