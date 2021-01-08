@@ -9,16 +9,19 @@ oldLevel = Screen('Preference', 'Verbosity', 1); % Store the old PTB message vis
 PerceptualGamma = zeros(8, 4); % Create a matrix for the PerceptualGamma data
 PerceptualGamma(:, 1) = 1:8; % Fill the first column of the table with the pattern numbers
 rng(participantID); % Initialise random number generator with the participantID as the seed
-patternNumber = randperm(8); % Creating a random permutation of integers from 1 to 8
+patternNumber = [1:8] % Create an array of pattern numbers
 
 window = OpenPTBWindow; %Open a black PTB window and output the window pointer for future scripts
 
     for j = 1:3 % Repeat three times for each pattern
+        patternNumber = patternNumber(randperm(length(patternNumber))); % Create a random permutation of integers for the order of halftone patterns each iteration
+        
         for l = 1:8 % Run for each pattern
             numWhite = patternNumber(l); % Choose a randomly generated integer as the pattern
             PerceptualGamma(numWhite, j+1) = RunTrial(numWhite); % Call RunTrial with the specified pattern, then store the grey-matching value iteratively
             Screen(window, 'Flip'); % Clear PTB screen without closing from RunTrial
         end
+        
     end
 
 DrawFormattedText(window, 'Thank you, this is the end of the experiment. \n The Gamma Data CSV has been saved to your working directory.', 'center', 200, white, [], [], [], [2]); % Draw completion text 200 pixels down from the top of the screen

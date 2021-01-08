@@ -1,4 +1,4 @@
-function gammaAnalysis
+gammafunction gammaAnalysis
 
 % Loads 20 participants' data for grey-matching with 3 repeats each and plots them by participant.
 % Also calculates the means for each repeat per participant, calculates the grand means per pattern, and calculates the standard error.
@@ -23,7 +23,7 @@ sdHalftones = zeros(8, 1); % Create a vertical matrix for the standard error of 
         end
         
         totalAverage(k) = mean(averageHalftones(k, :)); % Calculate the grand means from all participants for each pattern
-        sdHalftones(k) = std(averageHalftones(k, :)); % Calculate the standard deviation (error in this case) for each participant's pattern mean from the grand mean
+        sdHalftones(k) = std(averageHalftones(k, :)); % Calculate the standard deviation (error in this case) for each pattern grand mean
         labelNames{k} = ['Halftone ' int2str(k)]; % Create labels above each respective halftone
     end
 
