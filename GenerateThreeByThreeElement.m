@@ -16,29 +16,26 @@ switch numWhite
         binaryElement(2, 2) = 1;
     case 2
         binaryElement = zeros(3,3);
-        binaryElement(2, 1) = 1;        
-        binaryElement(2, 3) = 1;
+        binaryElement(2, [1 3]) = 1;
     case 3
         binaryElement = zeros(3,3);
         binaryElement(2, :) = 1;
     case 4
         binaryElement = zeros(3,3);
         binaryElement(1, 2) = 1;
-        binaryElement(2, 1) = 1;
-        binaryElement(2, 3) = 1;
+        binaryElement(2, [1 3]) = 1;
         binaryElement(3, 2) = 1;
     case 5
         binaryElement = ones(3,3);
         binaryElement(1, 2) = 0;
-        binaryElement(2, :) = 0;
+        binaryElement(2, [1 3]) = 0;
         binaryElement(3, 2) = 0;
     case 6
         binaryElement = ones(3,3);
         binaryElement(2, :) = 0;
     case 7
         binaryElement = ones(3,3);
-        binaryElement(2, 1) = 0;        
-        binaryElement(2, 3) = 0;
+        binaryElement(2, [1 3]) = 0;
     case 8
         binaryElement = ones(3,3);
         binaryElement(2, 2) = 0;
