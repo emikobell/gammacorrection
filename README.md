@@ -1,6 +1,6 @@
 # Perceptual Gamma Correction Experiment
 
-This MATLAB program is a perceptual gamma correction experiment modeled after Parraga et al. (2014)<sup>1</sup>. This program estimates the gamma curve of a given display using perceptual responses. Display gamma values vary across different monitors, however, can be estimated. Using the power law formula, $I = R^\gamma$, where $I$ is the screen intensity, $R$ is the requested signal, and $\gamma$ is the gamma curve of the display, the relationship between 
+This MATLAB program is a perceptual gamma correction experiment modeled after Parraga et al. (2014)<sup>1</sup>. This program estimates the gamma curve of a given display using perceptual responses. Display gamma values vary across different monitors, however, can be estimated. Using the power law formula, $$I = R^\gamma$$, where $$I$$ is the screen intensity, $$R$$ is the requested signal, and $$\gamma$$ is the gamma curve of the display, the relationship between 
 
 
 
