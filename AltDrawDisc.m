@@ -12,4 +12,3 @@ xd = c.Children(1).XData(1:end-1);
 yd = c.Children(1).YData(1:end-1);
  
 fill(xd, yd, repmat(greyLevel, 1, 3), 'LineStyle', 'none');
-
