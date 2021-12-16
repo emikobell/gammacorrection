@@ -4,10 +4,8 @@ This MATLAB program is a perceptual gamma correction experiment modeled after Pa
 
 The first part of the program simulates the gamma curve and output using inputted data. The second part of the program compares an objective "grayscale" created by black and white pixels in varying proportions to grayscale discs, which change in intensity. The user is asked to match the gray intensity of the disc to the black and white gray square in the background. This information is used to estimate the gamma curve of the display of the user.
 
-<p align="center">
- <img src="https://user-images.githubusercontent.com/64177820/146288105-3e385c6a-8314-4051-96da-d9070e424c91.png" />
+ ![Pattern4](https://user-images.githubusercontent.com/64177820/146288105-3e385c6a-8314-4051-96da-d9070e424c91.png)
  <i>An example of a pattern that a user will see. The middle disk gray intensity is adjustable.</i>
-</p>
 
 
 The compatibility of the following functions has been tested on both a Retina-display Mac running OSX Catalina and Big Sur and a Windows 10 PC with various screen resolutions.
