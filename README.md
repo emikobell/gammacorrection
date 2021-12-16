@@ -1,7 +1,6 @@
 # Perceptual Gamma Correction Experiment
 
-This MATLAB program is a perceptual gamma correction experiment modeled after Parraga et al. (2014)<sup>1</sup>. This program estimates the gamma curve of a given display using perceptual responses. Display gamma values vary across different monitors, however, can be estimated. Using the power law formula, <img src="https://render.githubusercontent.com/render/math?math=I = R^{\gamma}">, where I is the screen intensity, R is the requested signal, and <img src="https://render.githubusercontent.com/render/math?math=\gamma"> is the gamma curve of the display, the relationship between 
-
+This MATLAB program is a perceptual gamma correction experiment modeled after Parraga et al. (2014)<sup>1</sup>. Each computer's (or other device's) display can show differnt intensities of light, regardless of the requested value from the computer. To tackle this issue when presenting stimuli, calibration processes can be useful. This program simulates and estimates the gamma curve of a given display using perceptual responses given by participants. Gamma values vary across displays, however, can be estimated. Using the power law formula, <img src="https://render.githubusercontent.com/render/math?math=I = R^{\gamma}">, where I is the screen intensity, R is the requested signal, and <img src="https://render.githubusercontent.com/render/math?math=\gamma"> is the gamma curve of the display, the proportional relationship between the requested value and the actual light intensity can be found and adjusted.
 
 
 The compatibility of the following functions has been tested on both a Retina-display Mac running OSX Catalina and Big Sur and a Windows 10 PC with various screen resolutions.
@@ -10,7 +9,7 @@ These functions require Matlab R2020a or newer for optimal functioning, as well 
 
 Please use matlabProjectMaster.mlx to run the scripts provided below. The live script can run functions question by question. Please note that not all dependent functions are supplied, and that they need to be added to the working directory for them to function correctly. Dependent functions are noted in each step’s instructions.
 
-##
+## Simulating the Power Law Formula
 
 The following script generates an array of values, stores them, and calculates the intensities of a display with a gamma value of 2.2 for each value:
 
@@ -25,7 +24,6 @@ The “plotLightOutput.m” function plots the gamma curve and outputs the plot 
 The function accepts light output and requested signal data as input arguments, but only as matrices with either a single row or column to avoid potential errors with any other data types.The requested signal is placed on the x-axis while the light output is placed on the y-axis.
 The lightOutput data is then smoothed using the smooth function from the Curve Fitting Toolbox before being plotted, while requestedSignal should already have consistent intervals regardless of transformation (i.e. 1/9, 2/9…), have no noise, and be non-alterable due to their pre-specified nature. x and y axes limits are implemented since all values should remain between 0 and 1.
 
-
 The “alterGamma.m” function accepts an image file and a desired gamma value as input arguments to simulate an environment with the given gamma value. The image file must be loaded by specifying the file location, or name if the image is in the current working directory (e.g. alterGamma(‘testing.png’, 1.0)). The imread function transforms the image to a data array, and if the minimum and the maximum values of the data array exceeds 0 or 1 respectively, the im2double function rescales the output from integer data to a 0 to 1 scale. The power-law formula then transforms the image data to the specified gamma value. The im2double function is particularly useful for grey-scale intensities and removes the necessity to include another line of code to convert integer-based data to a 0 to 1 scale to fit the power-law formula. The function also allows for multiple image-type inputs, such as intensity, RGB, and binary. Finally, the updated data is displayed using the imshow function. imshow displays the matrix as an image and assumes that the data are pixel intensities.
 
 The “plotLightOutput.m” function can be used in the following manner:
@@ -35,6 +33,16 @@ GammaData = readmatrix('GammaData.csv');
 
 plotLightOutput(GammaData(:, 1), GammaData(:, 2))
 ```
+
+The dataset is read as a matrix as opposed to a table to omit any header text, without needing subsequent lines of code for processing. The plotLightOutput function then uses the first column as the requestedSignal argument and the second column as the lightOutput argument. The .png file of the plot is stored as “GammaDataPlot.png” in the working directory.
+
+The “PowerLawFit.m” function accepts x value data (requested signal) and y value data (recorded output) and plots the data points in comparison to a power-law curve generated using the fit function of the Curve Fitting Toolbox. This function utilises the nonlinear least-squares model and is an exponential type fit. Since the exponential model is convex/concave and will only provide one answer as the best fit, the inputted dataset will have one answer as the best fit as opposed to other nonlinear least-squares models with multiple possibilities. Thus, the most efficient starting point will be the one closest to “the correct answer”. Since most screens will have a gamma of around 2, the starting exponent is set to 2 to make the algorithm more efficient. However, the function will run and find the correct fit speedily regardless of a starting point if omitted due to the limited nature of answers. The outputted figure will display the best-fitting gamma for the dataset, along with the curve and the data points.
+
+## Perceptual Gamma Estimation
+
+The “eightTest.m” function will create 8 patterns based on the white and black units created by the GenerateThreeByThreeElement function and no input argument is needed. For each pattern, the for loop will call a three-by-three element with an increasing proportion of white in each iteration. Once the element is created, it is repeated 200 times in each direction using the repmat function to create a 600 by 600-pixel pattern. The pattern is then outputted as a .png file, shown to the user in a figure window, and after a keystroke, will close and continue the next iteration of the loop. This process will allow the user to verify the patterns and continue without a build-up of multiple figure windows. The .png files will be saved as “PatternNumber.png”, with “Number” representing the white proportion of the pattern in the white-black proportion (i.e. Pattern1.png for 1/9 white proportion) in the working directory.
+
+
 
 
 
